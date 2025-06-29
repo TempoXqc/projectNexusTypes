@@ -1,0 +1,20 @@
+{
+  "name": "@temproxqc/project-nexus-types",
+  "version": "1.0.0",
+  "description": "Types partagés pour projectNexus et projectNexusServer",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": ["dist"],
+  "scripts": {
+    "build": "tsc --build",
+    "publish": "npm publish --access public"
+  },
+  "author": "TempoXqc",
+  "license": "MIT",
+  "dependencies": {
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}
