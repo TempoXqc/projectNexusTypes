@@ -1,6 +1,6 @@
 {
-  "name": "@temproxqc/project-nexus-types",
-  "version": "1.0.0",
+  "name": "@tempoxqc/project-nexus-types",
+  "version": "1.0.3",
   "description": "Types partagés pour projectNexus et projectNexusServer",
   "main": "index.js",
   "types": "index.d.ts",
