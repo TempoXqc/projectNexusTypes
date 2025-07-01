@@ -1,9 +1,9 @@
 {
   "name": "@tempoxqc/project-nexus-types",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Types partagés pour projectNexus et projectNexusServer",
-  "main": "index.js",
-  "types": "index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": ["dist"],
   "scripts": {
     "build": "tsc --build",
