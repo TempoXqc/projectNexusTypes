@@ -1,9 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.EmitPlayerReadySchema = exports.PlayerReadySchema = void 0;
 // types/SocketSchemas/Player.ts
-import { z } from 'zod';
-export const PlayerReadySchema = z.object({
-    playerId: z.number().min(1),
+const zod_1 = require("zod");
+exports.PlayerReadySchema = zod_1.z.object({
+    playerId: zod_1.z.number().min(1),
 });
-export const EmitPlayerReadySchema = z.object({
-    gameId: z.string().min(1),
-    playerId: z.number().min(1).nullable(),
+exports.EmitPlayerReadySchema = zod_1.z.object({
+    gameId: zod_1.z.string().min(1),
+    playerId: zod_1.z.number().min(1).nullable(),
 });

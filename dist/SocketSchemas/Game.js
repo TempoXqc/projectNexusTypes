@@ -1,68 +1,71 @@
-import { z } from 'zod';
-import { CardSchema } from '../CardTypes';
-import { ChatMessageSchema } from './Chat';
-export const GameStartSchema = z.object({
-    playerId: z.number().nullable(),
-    gameId: z.string().min(1),
-    chatHistory: z.array(ChatMessageSchema),
-    availableDecks: z.array(z.object({ id: z.string().min(1), name: z.string().min(1), image: z.string().min(1), infoImage: z.string().min(1) })),
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.GameOverSchema = exports.EmitUpdateGameStateSchema = exports.GameStateUpdateSchema = exports.CreateGameAckSchema = exports.GameStartSchema = void 0;
+const zod_1 = require("zod");
+const CardTypes_1 = require("../CardTypes");
+const Chat_1 = require("./Chat");
+exports.GameStartSchema = zod_1.z.object({
+    playerId: zod_1.z.number().nullable(),
+    gameId: zod_1.z.string().min(1),
+    chatHistory: zod_1.z.array(Chat_1.ChatMessageSchema),
+    availableDecks: zod_1.z.array(zod_1.z.object({ id: zod_1.z.string().min(1), name: zod_1.z.string().min(1), image: zod_1.z.string().min(1), infoImage: zod_1.z.string().min(1) })),
 });
 // Add schema for createGame ACK
-export const CreateGameAckSchema = z.object({
-    gameId: z.string().min(1),
-    playerId: z.number().nullable(),
-    chatHistory: z.array(ChatMessageSchema),
-    availableDecks: z.array(z.object({ id: z.string().min(1), name: z.string().min(1), image: z.string().min(1) })),
+exports.CreateGameAckSchema = zod_1.z.object({
+    gameId: zod_1.z.string().min(1),
+    playerId: zod_1.z.number().nullable(),
+    chatHistory: zod_1.z.array(Chat_1.ChatMessageSchema),
+    availableDecks: zod_1.z.array(zod_1.z.object({ id: zod_1.z.string().min(1), name: zod_1.z.string().min(1), image: zod_1.z.string().min(1) })),
 });
-export const GameStateUpdateSchema = z.object({
-    player1: z
+exports.GameStateUpdateSchema = zod_1.z.object({
+    player1: zod_1.z
         .object({
-        field: z.array(CardSchema.nullable()).length(8),
-        hand: z.array(CardSchema),
-        opponentHand: z.array(z.unknown()).optional(),
-        graveyard: z.array(CardSchema),
-        mustDiscard: z.boolean(),
-        hasPlayedCard: z.boolean(),
-        deck: z.array(CardSchema),
-        lifePoints: z.number().min(0).max(30).optional(),
-        tokenCount: z.number().min(0).optional(),
-        tokenType: z.enum(['assassin', 'engine', 'viking', 'celestial', 'dragon', 'samurai', 'wizard', 'vampire']).nullable().optional(),
+        field: zod_1.z.array(CardTypes_1.CardSchema.nullable()).length(8),
+        hand: zod_1.z.array(CardTypes_1.CardSchema),
+        opponentHand: zod_1.z.array(zod_1.z.unknown()).optional(),
+        graveyard: zod_1.z.array(CardTypes_1.CardSchema),
+        mustDiscard: zod_1.z.boolean(),
+        hasPlayedCard: zod_1.z.boolean(),
+        deck: zod_1.z.array(CardTypes_1.CardSchema),
+        lifePoints: zod_1.z.number().min(0).max(30).optional(),
+        tokenCount: zod_1.z.number().min(0).optional(),
+        tokenType: zod_1.z.enum(['assassin', 'engine', 'viking', 'celestial', 'dragon', 'samurai', 'wizard', 'vampire']).nullable().optional(),
     })
         .optional(),
-    player2: z
+    player2: zod_1.z
         .object({
-        field: z.array(CardSchema.nullable()).length(8),
-        hand: z.array(CardSchema).optional(),
-        opponentHand: z.array(z.unknown()).optional(),
-        graveyard: z.array(CardSchema),
-        mustDiscard: z.boolean(),
-        hasPlayedCard: z.boolean(),
-        deck: z.array(CardSchema),
-        lifePoints: z.number().min(0).max(30).optional(),
-        tokenCount: z.number().min(0).optional(),
-        tokenType: z.enum(['assassin', 'engine', 'viking', 'celestial', 'dragon', 'samurai', 'wizard', 'vampire']).nullable().optional(),
+        field: zod_1.z.array(CardTypes_1.CardSchema.nullable()).length(8),
+        hand: zod_1.z.array(CardTypes_1.CardSchema).optional(),
+        opponentHand: zod_1.z.array(zod_1.z.unknown()).optional(),
+        graveyard: zod_1.z.array(CardTypes_1.CardSchema),
+        mustDiscard: zod_1.z.boolean(),
+        hasPlayedCard: zod_1.z.boolean(),
+        deck: zod_1.z.array(CardTypes_1.CardSchema),
+        lifePoints: zod_1.z.number().min(0).max(30).optional(),
+        tokenCount: zod_1.z.number().min(0).optional(),
+        tokenType: zod_1.z.enum(['assassin', 'engine', 'viking', 'celestial', 'dragon', 'samurai', 'wizard', 'vampire']).nullable().optional(),
     })
         .optional(),
-    turn: z.number().min(1).optional(),
-    phase: z.enum(['Standby', 'Main', 'Battle', 'End']).optional(),
-    activePlayer: z.string().min(1).optional(),
-    gameOver: z.boolean().optional(),
-    winner: z.string().min(1).nullable().optional(),
+    turn: zod_1.z.number().min(1).optional(),
+    phase: zod_1.z.enum(['Standby', 'Main', 'Battle', 'End']).optional(),
+    activePlayer: zod_1.z.string().min(1).optional(),
+    gameOver: zod_1.z.boolean().optional(),
+    winner: zod_1.z.string().min(1).nullable().optional(),
 });
-export const EmitUpdateGameStateSchema = z.object({
-    gameId: z.string().min(1),
-    state: z.object({
-        hand: z.array(CardSchema).optional(),
-        deck: z.array(CardSchema).optional(),
-        field: z.array(CardSchema.nullable()).length(8).optional(),
-        graveyard: z.array(CardSchema).optional(),
-        hasPlayedCard: z.boolean().optional(),
-        mustDiscard: z.boolean().optional(),
-        lifePoints: z.number().min(0).max(30).optional(),
-        tokenCount: z.number().min(0).optional(),
-        tokenType: z.enum(['assassin', 'engine', 'viking', 'celestial', 'dragon', 'samurai', 'wizard', 'vampire']).nullable().optional(),
+exports.EmitUpdateGameStateSchema = zod_1.z.object({
+    gameId: zod_1.z.string().min(1),
+    state: zod_1.z.object({
+        hand: zod_1.z.array(CardTypes_1.CardSchema).optional(),
+        deck: zod_1.z.array(CardTypes_1.CardSchema).optional(),
+        field: zod_1.z.array(CardTypes_1.CardSchema.nullable()).length(8).optional(),
+        graveyard: zod_1.z.array(CardTypes_1.CardSchema).optional(),
+        hasPlayedCard: zod_1.z.boolean().optional(),
+        mustDiscard: zod_1.z.boolean().optional(),
+        lifePoints: zod_1.z.number().min(0).max(30).optional(),
+        tokenCount: zod_1.z.number().min(0).optional(),
+        tokenType: zod_1.z.enum(['assassin', 'engine', 'viking', 'celestial', 'dragon', 'samurai', 'wizard', 'vampire']).nullable().optional(),
     }),
 });
-export const GameOverSchema = z.object({
-    winner: z.string().min(1).nullable(),
+exports.GameOverSchema = zod_1.z.object({
+    winner: zod_1.z.string().min(1).nullable(),
 });
