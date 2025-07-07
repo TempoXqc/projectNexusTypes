@@ -105,7 +105,8 @@ export interface PlayerState {
   lifePoints: number;
   tokenCount: number;
   tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
-  mulliganDone: boolean
+  mulliganDone: boolean;
+  playmat: [];
 }
 
 export interface PersistedServerGameState extends Omit<ServerGameState, 'playersReady'> {

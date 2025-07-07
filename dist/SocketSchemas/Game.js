@@ -9,6 +9,7 @@ exports.GameStartSchema = zod_1.z.object({
     gameId: zod_1.z.string().min(1),
     chatHistory: zod_1.z.array(Chat_1.ChatMessageSchema),
     availableDecks: zod_1.z.array(zod_1.z.object({ id: zod_1.z.string().min(1), name: zod_1.z.string().min(1), image: zod_1.z.string().min(1), infoImage: zod_1.z.string().min(1) })),
+    playmats: zod_1.z.array(zod_1.z.object({ id: zod_1.z.string(), name: zod_1.z.string(), image: zod_1.z.string() })),
 });
 // Add schema for createGame ACK
 exports.CreateGameAckSchema = zod_1.z.object({

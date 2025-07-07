@@ -7,6 +7,7 @@ export const GameStartSchema = z.object({
   gameId: z.string().min(1),
   chatHistory: z.array(ChatMessageSchema),
   availableDecks: z.array(z.object({ id: z.string().min(1), name: z.string().min(1), image: z.string().min(1), infoImage: z.string().min(1) })),
+  playmats: z.array(z.object({id: z.string(), name: z.string(), image: z.string()})),
 });
 
 // Add schema for createGame ACK
