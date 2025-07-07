@@ -87,7 +87,7 @@ export interface ServerGameState {
     '1': string[];
     '2': string[];
   };
-  availableDecks: { id: string; name: string; image: string }[];
+  availableDecks: { id: string; name: string; image: string; infoImage: string }[];
   createdAt: Date;
   status: 'waiting' | 'started' | 'finished';
   playersReady: Set<number>;

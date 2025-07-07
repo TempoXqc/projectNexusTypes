@@ -104,6 +104,7 @@ export interface ServerGameState {
         id: string;
         name: string;
         image: string;
+        infoImage: string;
     }[];
     createdAt: Date;
     status: 'waiting' | 'started' | 'finished';
