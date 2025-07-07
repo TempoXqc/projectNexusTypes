@@ -92,6 +92,7 @@ export interface ServerGameState {
   status: 'waiting' | 'started' | 'finished';
   playersReady: Set<number>;
   playmats: { id: string; name: string; image: string }[];
+  lifeToken: { id: string; name: string; image: string };
 }
 
 export interface PlayerState {
