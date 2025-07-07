@@ -108,6 +108,11 @@ export interface ServerGameState {
     createdAt: Date;
     status: 'waiting' | 'started' | 'finished';
     playersReady: Set<number>;
+    playmats: {
+        id: string;
+        name: string;
+        image: string;
+    }[];
 }
 export interface PlayerState {
     hand: Card[];
@@ -122,7 +127,11 @@ export interface PlayerState {
     tokenCount: number;
     tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
     mulliganDone: boolean;
-    playmat: [];
+    playmat: {
+        id: string;
+        name: string;
+        image: string;
+    };
 }
 export interface PersistedServerGameState extends Omit<ServerGameState, 'playersReady'> {
     playersReady: number[];

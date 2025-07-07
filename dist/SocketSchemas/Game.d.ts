@@ -53,12 +53,12 @@ export declare const GameStartSchema: z.ZodObject<{
         image: string;
         infoImage: string;
     }[];
-    playerId: number | null;
     playmats: {
         id: string;
         name: string;
         image: string;
     }[];
+    playerId: number | null;
 }, {
     gameId: string;
     chatHistory: {
@@ -71,12 +71,12 @@ export declare const GameStartSchema: z.ZodObject<{
         image: string;
         infoImage: string;
     }[];
-    playerId: number | null;
     playmats: {
         id: string;
         name: string;
         image: string;
     }[];
+    playerId: number | null;
 }>;
 export declare const CreateGameAckSchema: z.ZodObject<{
     gameId: z.ZodString;
