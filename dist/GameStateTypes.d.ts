@@ -106,7 +106,7 @@ export interface ServerGameState {
         image: string;
     }[];
     createdAt: Date;
-    status: 'waiting' | 'started';
+    status: 'waiting' | 'started' | 'finished';
     playersReady: Set<number>;
 }
 export interface PlayerState {
@@ -121,6 +121,7 @@ export interface PlayerState {
     lifePoints: number;
     tokenCount: number;
     tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
+    mulliganDone: boolean;
 }
 export interface PersistedServerGameState extends Omit<ServerGameState, 'playersReady'> {
     playersReady: number[];

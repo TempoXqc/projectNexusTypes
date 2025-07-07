@@ -84,12 +84,12 @@ export interface ServerGameState {
     winner: string | null;
   };
   deckChoices: {
-    '1': string[]; // Tableau pour cohérence
+    '1': string[];
     '2': string[];
   };
   availableDecks: { id: string; name: string; image: string }[];
   createdAt: Date;
-  status: 'waiting' | 'started';
+  status: 'waiting' | 'started' | 'finished';
   playersReady: Set<number>;
 }
 
@@ -105,6 +105,7 @@ export interface PlayerState {
   lifePoints: number;
   tokenCount: number;
   tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
+  mulliganDone: boolean
 }
 
 export interface PersistedServerGameState extends Omit<ServerGameState, 'playersReady'> {

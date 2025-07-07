@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05f9c425-7321-4ea7-9286-7253606e0a5d" name="Changes" comment="Corriger tsconfig.json et publier le paquet de types" />
+    <list default="true" id="05f9c425-7321-4ea7-9286-7253606e0a5d" name="Changes" comment="Corriger tsconfig.json et publier le paquet de types">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/GameStateTypes.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/GameStateTypes.d.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameStateTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameStateTypes.ts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,24 +18,24 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "TempoXqc"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;TempoXqc&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/TempoXqc/projectNexusTypes.git",
-    "accountId": "0a4d9726-6342-4f19-b878-a943b07a28df"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/TempoXqc/projectNexusTypes.git&quot;,
+    &quot;accountId&quot;: &quot;0a4d9726-6342-4f19-b878-a943b07a28df&quot;
   }
-}]]></component>
+}</component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="ProjectErrors" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 7
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
   <component name="ProjectId" id="2zBPa0m6Vvc6akSUjCNl5DW2hhW" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -49,6 +54,8 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "npm.build.executor": "Run",
+    "npm.publish.executor": "Run",
     "ts.external.directory.path": "C:\\Users\\Mr Peter\\WebstormProjects\\projectNexusTypes\\node_modules\\typescript\\lib",
     "vue.rearranger.settings.migration": "true"
   }
@@ -61,6 +68,34 @@
       <recent name="C:\Users\Mr Peter\WebstormProjects\projectNexusTypes\src" />
       <recent name="C:\Users\Mr Peter\WebstormProjects\projectNexusTypes" />
     </key>
+  </component>
+  <component name="RunManager" selected="npm.publish">
+    <configuration name="build" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="build" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <configuration name="publish" type="js.build_tools.npm" temporary="true" nameIsGenerated="true">
+      <package-json value="$PROJECT_DIR$/package.json" />
+      <command value="run" />
+      <scripts>
+        <script value="publish" />
+      </scripts>
+      <node-interpreter value="project" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="npm.publish" />
+        <item itemvalue="npm.build" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -77,6 +112,10 @@
       <option name="presentableId" value="Default" />
       <updated>1751201552813</updated>
       <workItem from="1751201553855" duration="1188000" />
+      <workItem from="1751202874721" duration="7895000" />
+      <workItem from="1751557015841" duration="673000" />
+      <workItem from="1751662328148" duration="386000" />
+      <workItem from="1751890436426" duration="749000" />
     </task>
     <task id="LOCAL-00001" summary="Corriger tsconfig.json et publier le paquet de types">
       <option name="closed" value="true" />
@@ -86,7 +125,47 @@
       <option name="project" value="LOCAL" />
       <updated>1751202580866</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Corriger tsconfig.json et publier le paquet de types">
+      <option name="closed" value="true" />
+      <created>1751373601377</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1751373601377</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Corriger tsconfig.json et publier le paquet de types">
+      <option name="closed" value="true" />
+      <created>1751375941130</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1751375941130</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Corriger tsconfig.json et publier le paquet de types">
+      <option name="closed" value="true" />
+      <created>1751375954370</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1751375954370</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Corriger tsconfig.json et publier le paquet de types">
+      <option name="closed" value="true" />
+      <created>1751376126054</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1751376126054</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Corriger tsconfig.json et publier le paquet de types">
+      <option name="closed" value="true" />
+      <created>1751376471142</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1751376471142</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
