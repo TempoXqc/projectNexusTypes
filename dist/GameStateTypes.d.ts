@@ -29,6 +29,7 @@ export interface GameState {
         activePlayerId: string | null;
         gameOver: boolean;
         winner: string | null;
+        updateTimestamp?: number;
     };
     ui: {
         hoveredCardId: string | null;
@@ -95,6 +96,7 @@ export interface ServerGameState {
         phase: 'Standby' | 'Main' | 'Battle' | 'End';
         gameOver: boolean;
         winner: string | null;
+        updateTimestamp?: number;
     };
     deckChoices: {
         '1': string[];
