@@ -111,6 +111,7 @@ export interface PlayerState {
   tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
   mulliganDone: boolean;
   playmat: { id: string; name: string; image: string };
+  revealedCards?: Card[];
 }
 
 export interface PersistedServerGameState extends Omit<ServerGameState, 'playersReady'> {
