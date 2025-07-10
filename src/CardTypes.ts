@@ -76,6 +76,9 @@ const CardEffectSchema = z.object({
       })
       .optional(),
   moveTo: z.enum(['opponent_graveyard', 'top_of_deck', 'bottom_of_deck']).optional(),
+  from: z.string().optional(),
+  to: z.string().optional(),
+  max: z.number().min(0).optional(),
   options: z
       .array(
           z.object({
@@ -134,7 +137,10 @@ export interface CardEffect {
   cardType?: string;
   token?: boolean;
   useAvailableTokenPool?: boolean;
-  prompt?: { en: string; fr: string; es: string };
+  prompt?: { en?: string; fr?: string; es?: string };
   moveTo?: 'opponent_graveyard' | 'top_of_deck' | 'bottom_of_deck';
+  from?: string;
+  to?: string;
+  max?: number;
   options?: Array<{ title: { en: string; fr: string; es: string }; actions: CardEffect[] }>;
 }

@@ -124,6 +124,9 @@ export declare const EmitAddAssassinTokenToOpponentDeckSchema: z.ZodObject<{
                 es?: string | undefined;
             }>>;
             moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
+            from: z.ZodOptional<z.ZodString>;
+            to: z.ZodOptional<z.ZodString>;
+            max: z.ZodOptional<z.ZodNumber>;
             options: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 title: z.ZodObject<{
                     fr: z.ZodString;
@@ -182,6 +185,9 @@ export declare const EmitAddAssassinTokenToOpponentDeckSchema: z.ZodObject<{
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }, {
             trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
             action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
@@ -210,6 +216,9 @@ export declare const EmitAddAssassinTokenToOpponentDeckSchema: z.ZodObject<{
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }>, "many">>;
         types: z.ZodOptional<z.ZodArray<z.ZodObject<{
             type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
@@ -265,6 +274,9 @@ export declare const EmitAddAssassinTokenToOpponentDeckSchema: z.ZodObject<{
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;
@@ -314,6 +326,9 @@ export declare const EmitAddAssassinTokenToOpponentDeckSchema: z.ZodObject<{
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;
@@ -367,6 +382,9 @@ export declare const EmitAddAssassinTokenToOpponentDeckSchema: z.ZodObject<{
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;
@@ -420,6 +438,9 @@ export declare const EmitAddAssassinTokenToOpponentDeckSchema: z.ZodObject<{
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;
@@ -499,6 +520,9 @@ export declare const EmitPlaceAssassinTokenAtOpponentDeckBottomSchema: z.ZodObje
                 es?: string | undefined;
             }>>;
             moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
+            from: z.ZodOptional<z.ZodString>;
+            to: z.ZodOptional<z.ZodString>;
+            max: z.ZodOptional<z.ZodNumber>;
             options: z.ZodOptional<z.ZodArray<z.ZodObject<{
                 title: z.ZodObject<{
                     fr: z.ZodString;
@@ -557,6 +581,9 @@ export declare const EmitPlaceAssassinTokenAtOpponentDeckBottomSchema: z.ZodObje
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }, {
             trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
             action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
@@ -585,6 +612,9 @@ export declare const EmitPlaceAssassinTokenAtOpponentDeckBottomSchema: z.ZodObje
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }>, "many">>;
         types: z.ZodOptional<z.ZodArray<z.ZodObject<{
             type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
@@ -640,6 +670,9 @@ export declare const EmitPlaceAssassinTokenAtOpponentDeckBottomSchema: z.ZodObje
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;
@@ -689,6 +722,9 @@ export declare const EmitPlaceAssassinTokenAtOpponentDeckBottomSchema: z.ZodObje
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;
@@ -741,6 +777,9 @@ export declare const EmitPlaceAssassinTokenAtOpponentDeckBottomSchema: z.ZodObje
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;
@@ -793,6 +832,9 @@ export declare const EmitPlaceAssassinTokenAtOpponentDeckBottomSchema: z.ZodObje
                 es?: string | undefined;
             } | undefined;
             moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
+            from?: string | undefined;
+            to?: string | undefined;
+            max?: number | undefined;
         }[] | undefined;
         types?: {
             value: number;

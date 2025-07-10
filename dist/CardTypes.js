@@ -74,6 +74,9 @@ const CardEffectSchema = zod_1.z.object({
     })
         .optional(),
     moveTo: zod_1.z.enum(['opponent_graveyard', 'top_of_deck', 'bottom_of_deck']).optional(),
+    from: zod_1.z.string().optional(),
+    to: zod_1.z.string().optional(),
+    max: zod_1.z.number().min(0).optional(),
     options: zod_1.z
         .array(zod_1.z.object({
         title: LocalizedStringSchema,
