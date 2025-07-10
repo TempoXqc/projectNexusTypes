@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CardSchema = void 0;
+// types/CardTypes.ts
 const zod_1 = require("zod");
 const LocalizedStringSchema = zod_1.z.object({
     fr: zod_1.z.string().min(1, 'Le nom en français ne peut pas être vide.'),
@@ -8,7 +9,7 @@ const LocalizedStringSchema = zod_1.z.object({
     es: zod_1.z.string().min(1, 'Le nom en espagnol ne peut pas être vide.'),
 });
 const CardTypeSchema = zod_1.z.object({
-    type: zod_1.z.enum(['Attack', 'Defence', 'Support', 'Spell']),
+    type: zod_1.z.enum(['Attack', 'Defence', 'Support', 'Spell', 'token']),
     value: zod_1.z.number().min(0),
 });
 const CardEffectSchema = zod_1.z.object({
@@ -24,6 +25,7 @@ const CardEffectSchema = zod_1.z.object({
         'Aura',
         'AfterAttack',
         'Passive',
+        'OnDetected',
     ]),
     action: zod_1.z.enum([
         'purify',
@@ -46,6 +48,7 @@ const CardEffectSchema = zod_1.z.object({
         'choice',
         'reduce_cost_to_zero',
         'restore_health_per_hidden_assassins',
+        'return_to_owner_hand',
     ]),
     condition: zod_1.z
         .union([
@@ -78,6 +81,7 @@ const CardEffectSchema = zod_1.z.object({
     }))
         .optional(),
 });
+// Schéma principal pour une carte
 exports.CardSchema = zod_1.z.object({
     id: zod_1.z.string().min(1, 'L’ID de la carte ne peut pas être vide.'),
     name: LocalizedStringSchema,
@@ -87,4 +91,5 @@ exports.CardSchema = zod_1.z.object({
     effects: zod_1.z.array(CardEffectSchema).optional(),
     types: zod_1.z.array(CardTypeSchema).optional(),
     exhausted: zod_1.z.boolean().optional(),
+    quantity: zod_1.z.number().min(0).optional(),
 });

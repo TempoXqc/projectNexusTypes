@@ -162,8 +162,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -230,8 +230,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -240,6 +240,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -249,7 +250,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -258,8 +258,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -268,6 +268,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -277,7 +278,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -287,16 +287,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -312,8 +313,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -322,6 +323,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -331,7 +333,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -342,9 +343,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -360,8 +362,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -370,6 +372,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -379,7 +382,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -390,9 +392,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>>, "many">;
         hand: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -425,8 +428,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -493,8 +496,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -503,6 +506,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -512,7 +516,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -521,8 +524,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -531,6 +534,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -540,7 +544,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -550,16 +553,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -575,8 +579,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -585,6 +589,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -594,7 +599,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -605,9 +609,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -623,8 +628,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -633,6 +638,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -642,7 +648,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -653,9 +658,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">;
         opponentHand: z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>;
         graveyard: z.ZodArray<z.ZodObject<{
@@ -689,8 +695,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -757,8 +763,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -767,6 +773,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -776,7 +783,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -785,8 +791,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -795,6 +801,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -804,7 +811,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -814,16 +820,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -839,8 +846,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -849,6 +856,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -858,7 +866,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -869,9 +876,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -887,8 +895,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -897,6 +905,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -906,7 +915,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -917,9 +925,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">;
         mustDiscard: z.ZodBoolean;
         hasPlayedCard: z.ZodBoolean;
@@ -954,8 +963,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -1022,8 +1031,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1032,6 +1041,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1041,7 +1051,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1050,8 +1059,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1060,6 +1069,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1069,7 +1079,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1079,16 +1088,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -1104,8 +1114,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1114,6 +1124,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1123,7 +1134,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1134,9 +1144,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -1152,8 +1163,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1162,6 +1173,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1171,7 +1183,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1182,9 +1193,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">;
         lifePoints: z.ZodOptional<z.ZodNumber>;
         tokenCount: z.ZodOptional<z.ZodNumber>;
@@ -1205,8 +1217,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1215,6 +1227,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1224,7 +1237,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1235,9 +1247,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
@@ -1254,8 +1267,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1264,6 +1277,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1273,7 +1287,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1284,9 +1297,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
@@ -1303,8 +1317,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1313,6 +1327,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1322,7 +1337,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1333,9 +1347,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -1354,8 +1369,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1364,6 +1379,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1373,7 +1389,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1384,9 +1399,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -1408,8 +1424,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1418,6 +1434,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1427,7 +1444,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1438,9 +1454,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
@@ -1457,8 +1474,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1467,6 +1484,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1476,7 +1494,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1487,9 +1504,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
@@ -1506,8 +1524,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1516,6 +1534,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1525,7 +1544,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1536,9 +1554,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -1557,8 +1576,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1567,6 +1586,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1576,7 +1596,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1587,9 +1606,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -1628,8 +1648,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -1696,8 +1716,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1706,6 +1726,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1715,7 +1736,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1724,8 +1744,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1734,6 +1754,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1743,7 +1764,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1753,16 +1773,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -1778,8 +1799,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1788,6 +1809,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1797,7 +1819,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1808,9 +1829,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -1826,8 +1848,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1836,6 +1858,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1845,7 +1868,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1856,9 +1878,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>>, "many">;
         hand: z.ZodOptional<z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -1891,8 +1914,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -1959,8 +1982,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1969,6 +1992,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -1978,7 +2002,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -1987,8 +2010,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -1997,6 +2020,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2006,7 +2030,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2016,16 +2039,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -2041,8 +2065,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2051,6 +2075,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2060,7 +2085,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2071,9 +2095,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -2089,8 +2114,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2099,6 +2124,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2108,7 +2134,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2119,9 +2144,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">>;
         opponentHand: z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>;
         graveyard: z.ZodArray<z.ZodObject<{
@@ -2155,8 +2181,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -2223,8 +2249,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2233,6 +2259,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2242,7 +2269,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2251,8 +2277,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2261,6 +2287,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2270,7 +2297,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2280,16 +2306,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -2305,8 +2332,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2315,6 +2342,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2324,7 +2352,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2335,9 +2362,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -2353,8 +2381,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2363,6 +2391,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2372,7 +2401,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2383,9 +2411,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">;
         mustDiscard: z.ZodBoolean;
         hasPlayedCard: z.ZodBoolean;
@@ -2420,8 +2449,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -2488,8 +2517,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2498,6 +2527,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2507,7 +2537,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2516,8 +2545,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2526,6 +2555,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2535,7 +2565,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2545,16 +2574,17 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -2570,8 +2600,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2580,6 +2610,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2589,7 +2620,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2600,9 +2630,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -2618,8 +2649,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2628,6 +2659,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2637,7 +2669,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2648,9 +2679,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">;
         lifePoints: z.ZodOptional<z.ZodNumber>;
         tokenCount: z.ZodOptional<z.ZodNumber>;
@@ -2671,8 +2703,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2681,6 +2713,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2690,7 +2723,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2701,9 +2733,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
@@ -2720,8 +2753,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2730,6 +2763,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2739,7 +2773,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2750,9 +2783,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -2771,8 +2805,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2781,6 +2815,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2790,7 +2825,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2801,9 +2835,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -2822,8 +2857,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2832,6 +2867,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2841,7 +2877,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2852,9 +2887,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
@@ -2874,8 +2910,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2884,6 +2920,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2893,7 +2930,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2904,9 +2940,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
@@ -2923,8 +2960,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2933,6 +2970,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2942,7 +2980,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -2953,9 +2990,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -2974,8 +3012,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -2984,6 +3022,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -2993,7 +3032,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3004,9 +3042,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -3025,8 +3064,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3035,6 +3074,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3044,7 +3084,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3055,9 +3094,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
@@ -3086,8 +3126,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3096,6 +3136,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3105,7 +3146,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3116,9 +3156,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
@@ -3135,8 +3176,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3145,6 +3186,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3154,7 +3196,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3165,9 +3206,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
@@ -3184,8 +3226,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3194,6 +3236,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3203,7 +3246,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3214,9 +3256,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -3235,8 +3278,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3245,6 +3288,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3254,7 +3298,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3265,9 +3308,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -3290,8 +3334,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3300,6 +3344,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3309,7 +3354,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3320,9 +3364,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
@@ -3339,8 +3384,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3349,6 +3394,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3358,7 +3404,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3369,9 +3414,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -3390,8 +3436,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3400,6 +3446,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3409,7 +3456,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3420,9 +3466,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -3441,8 +3488,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3451,6 +3498,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3460,7 +3508,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3471,9 +3518,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
@@ -3500,8 +3548,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3510,6 +3558,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3519,7 +3568,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3530,9 +3578,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
@@ -3549,8 +3598,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3559,6 +3608,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3568,7 +3618,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3579,9 +3628,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
@@ -3598,8 +3648,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3608,6 +3658,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3617,7 +3668,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3628,9 +3678,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -3649,8 +3700,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3659,6 +3710,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3668,7 +3720,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3679,9 +3730,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -3704,8 +3756,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3714,6 +3766,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3723,7 +3776,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3734,9 +3786,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
@@ -3753,8 +3806,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3763,6 +3816,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3772,7 +3826,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3783,9 +3836,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
@@ -3804,8 +3858,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3814,6 +3868,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3823,7 +3878,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3834,9 +3888,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
@@ -3855,8 +3910,8 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -3865,6 +3920,7 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -3874,7 +3930,6 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -3885,9 +3940,10 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
@@ -3930,8 +3986,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -3998,8 +4054,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4008,6 +4064,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4017,7 +4074,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4026,8 +4082,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4036,6 +4092,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4045,7 +4102,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4055,16 +4111,17 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -4080,8 +4137,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4090,6 +4147,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4099,7 +4157,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4110,9 +4167,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -4128,8 +4186,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4138,6 +4196,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4147,7 +4206,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4158,9 +4216,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">>;
         deck: z.ZodOptional<z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -4193,8 +4252,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -4261,8 +4320,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4271,6 +4330,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4280,7 +4340,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4289,8 +4348,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4299,6 +4358,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4308,7 +4368,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4318,16 +4377,17 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -4343,8 +4403,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4353,6 +4413,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4362,7 +4423,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4373,9 +4433,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -4391,8 +4452,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4401,6 +4462,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4410,7 +4472,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4421,9 +4482,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">>;
         field: z.ZodOptional<z.ZodArray<z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
@@ -4456,8 +4518,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -4524,8 +4586,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4534,6 +4596,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4543,7 +4606,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4552,8 +4614,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4562,6 +4624,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4571,7 +4634,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4581,16 +4643,17 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -4606,8 +4669,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4616,6 +4679,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4625,7 +4689,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4636,9 +4699,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -4654,8 +4718,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4664,6 +4728,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4673,7 +4738,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4684,9 +4748,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>>, "many">>;
         graveyard: z.ZodOptional<z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -4719,8 +4784,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
             cost: z.ZodOptional<z.ZodNumber>;
             effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins"]>;
+                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
+                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
                 condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
                     'unit.level': z.ZodOptional<z.ZodString>;
                     'target.type': z.ZodOptional<z.ZodString>;
@@ -4787,8 +4852,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     actions: any[];
                 }>, "many">>;
             }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4797,6 +4862,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4806,7 +4872,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4815,8 +4880,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 } | undefined;
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4825,6 +4890,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4834,7 +4900,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4844,16 +4909,17 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
             }>, "many">>;
             types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell"]>;
+                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
                 value: z.ZodNumber;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }>, "many">>;
             exhausted: z.ZodOptional<z.ZodBoolean>;
+            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
             name: {
@@ -4869,8 +4935,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4879,6 +4945,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4888,7 +4955,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4899,9 +4965,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }, {
             id: string;
             name: {
@@ -4917,8 +4984,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4927,6 +4994,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4936,7 +5004,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -4947,9 +5014,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }>, "many">>;
         hasPlayedCard: z.ZodOptional<z.ZodBoolean>;
         mustDiscard: z.ZodOptional<z.ZodBoolean>;
@@ -4974,8 +5042,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -4984,6 +5052,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -4993,7 +5062,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5004,9 +5072,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
@@ -5023,8 +5092,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5033,6 +5102,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5042,7 +5112,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5053,9 +5122,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
@@ -5072,8 +5142,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5082,6 +5152,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5091,7 +5162,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5102,9 +5172,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
@@ -5123,8 +5194,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5133,6 +5204,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5142,7 +5214,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5153,9 +5224,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
     }, {
@@ -5176,8 +5248,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5186,6 +5258,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5195,7 +5268,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5206,9 +5278,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
@@ -5225,8 +5298,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5235,6 +5308,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5244,7 +5318,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5255,9 +5328,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
@@ -5274,8 +5348,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5284,6 +5358,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5293,7 +5368,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5304,9 +5378,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
@@ -5325,8 +5400,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5335,6 +5410,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5344,7 +5420,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5355,9 +5430,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
     }>;
@@ -5381,8 +5457,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5391,6 +5467,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5400,7 +5477,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5411,9 +5487,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
@@ -5430,8 +5507,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5440,6 +5517,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5449,7 +5527,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5460,9 +5537,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
@@ -5479,8 +5557,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5489,6 +5567,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5498,7 +5577,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5509,9 +5587,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
@@ -5530,8 +5609,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5540,6 +5619,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5549,7 +5629,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5560,9 +5639,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
     };
@@ -5586,8 +5666,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5596,6 +5676,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5605,7 +5686,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5616,9 +5696,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
@@ -5635,8 +5716,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5645,6 +5726,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5654,7 +5736,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5665,9 +5746,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
@@ -5684,8 +5766,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5694,6 +5776,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5703,7 +5786,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5714,9 +5796,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
@@ -5735,8 +5818,8 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
             cost?: number | undefined;
             effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins";
+                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
+                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
                 options?: {
                     title: {
                         fr: string;
@@ -5745,6 +5828,7 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                     };
                     actions: any[];
                 }[] | undefined;
+                token?: boolean | undefined;
                 condition?: string | {
                     'unit.level'?: string | undefined;
                     'target.type'?: string | undefined;
@@ -5754,7 +5838,6 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
                 amount?: number | undefined;
                 cardType?: string | undefined;
-                token?: boolean | undefined;
                 useAvailableTokenPool?: boolean | undefined;
                 prompt?: {
                     fr?: string | undefined;
@@ -5765,9 +5848,10 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
             }[] | undefined;
             types?: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell";
+                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
             }[] | undefined;
             exhausted?: boolean | undefined;
+            quantity?: number | undefined;
         }[] | undefined;
         tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
     };
