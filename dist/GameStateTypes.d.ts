@@ -140,6 +140,7 @@ export interface PlayerState {
         name: string;
         image: string;
     };
+    revealedCards?: Card[];
 }
 export interface PersistedServerGameState extends Omit<ServerGameState, 'playersReady'> {
     playersReady: number[];

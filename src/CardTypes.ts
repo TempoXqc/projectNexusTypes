@@ -1,4 +1,5 @@
-﻿import { z } from 'zod';
+﻿// types/CardTypes.ts
+import { z } from 'zod';
 
 const LocalizedStringSchema = z.object({
   fr: z.string().min(1, 'Le nom en français ne peut pas être vide.'),
@@ -6,10 +7,12 @@ const LocalizedStringSchema = z.object({
   es: z.string().min(1, 'Le nom en espagnol ne peut pas être vide.'),
 });
 
+
 const CardTypeSchema = z.object({
-  type: z.enum(['Attack', 'Defence', 'Support', 'Spell']),
+  type: z.enum(['Attack', 'Defence', 'Support', 'Spell', 'token']),
   value: z.number().min(0),
 });
+
 
 const CardEffectSchema = z.object({
   trigger: z.enum([
@@ -24,6 +27,7 @@ const CardEffectSchema = z.object({
     'Aura',
     'AfterAttack',
     'Passive',
+    'OnDetected',
   ]),
   action: z.enum([
     'purify',
@@ -46,6 +50,7 @@ const CardEffectSchema = z.object({
     'choice',
     'reduce_cost_to_zero',
     'restore_health_per_hidden_assassins',
+    'return_to_owner_hand',
   ]),
   condition: z
       .union([
@@ -81,7 +86,7 @@ const CardEffectSchema = z.object({
       .optional(),
 });
 
-
+// Schéma principal pour une carte
 export const CardSchema = z.object({
   id: z.string().min(1, 'L’ID de la carte ne peut pas être vide.'),
   name: LocalizedStringSchema,
@@ -91,7 +96,9 @@ export const CardSchema = z.object({
   effects: z.array(CardEffectSchema).optional(),
   types: z.array(CardTypeSchema).optional(),
   exhausted: z.boolean().optional(),
+  quantity: z.number().min(0).optional(),
 });
+
 
 export interface Card {
   id: string;
@@ -110,10 +117,11 @@ export interface Card {
   effects?: CardEffect[];
   types?: CardType[];
   exhausted?: boolean;
+  quantity?: number;
 }
 
 export interface CardType {
-  type: 'Attack' | 'Defence' | 'Support' | 'Spell';
+  type: 'Attack' | 'Defence' | 'Support' | 'Spell' | 'token';
   value: number;
 }
 
