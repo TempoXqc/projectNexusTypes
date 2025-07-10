@@ -1,28 +1,7 @@
 import { Card } from './CardTypes';
-
 export interface GameState {
-  player: {
-    hand: Card[];
-    deck: Card[];
-    graveyard: Card[] | null;
-    field: (Card | null)[];
-    mustDiscard: boolean;
-    hasPlayedCard: boolean;
-    lifePoints: number;
-    tokenCount: number;
-    tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
-  };
-  opponent: {
-    hand: Card[];
-    deck: Card[];
-    graveyard: Card[];
-    field: (Card | null)[];
-    mustDiscard: boolean;
-    hasPlayedCard: boolean;
-    lifePoints: number;
-    tokenCount: number;
-    tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
-  };
+  player: PlayerState;
+  opponent: PlayerState;
   game: {
     turn: number;
     currentPhase: 'Standby' | 'Main' | 'Battle' | 'End';
@@ -42,6 +21,10 @@ export interface GameState {
     isRightPanelHovered: boolean;
     isTokenZoneOpen: boolean;
     isOpponentTokenZoneOpen: boolean;
+    isRevealedCardsOpen: boolean;
+    isReorderCardsOpen: boolean;
+    isSelectCardOpen: boolean;
+    isChoiceOpen: boolean;
   };
   chat: {
     messages: { playerId: number; message: string }[];
@@ -61,7 +44,7 @@ export interface GameState {
     bothReady: boolean;
     opponentReady: boolean;
     deckSelectionData: { player1DeckId: string[] | string | null; player2DeckIds: string[]; selectedDecks: string[] } | null;
-    randomizers: { id: string; name: string; image: string;  infoImage: string; }[];
+    randomizers: { id: string; name: string; image: string; infoImage: string }[];
     waitingForPlayer1: boolean;
   };
   connection: {
