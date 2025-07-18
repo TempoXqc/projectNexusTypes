@@ -159,156 +159,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -319,48 +288,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -371,46 +334,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>>, "many">;
         hand: z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -440,156 +394,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -600,48 +523,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -652,46 +569,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">;
         opponentHand: z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>;
         graveyard: z.ZodArray<z.ZodObject<{
@@ -722,156 +630,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -882,48 +759,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -934,46 +805,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">;
         mustDiscard: z.ZodBoolean;
         hasPlayedCard: z.ZodBoolean;
@@ -1005,156 +867,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1165,48 +996,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1217,46 +1042,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">;
         lifePoints: z.ZodOptional<z.ZodNumber>;
         tokenCount: z.ZodOptional<z.ZodNumber>;
@@ -1264,6 +1080,9 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1274,49 +1093,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1327,49 +1140,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1380,51 +1187,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1435,54 +1236,48 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     }, {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1493,49 +1288,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1546,49 +1335,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1599,51 +1382,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1654,51 +1431,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     }>>;
     player2: z.ZodOptional<z.ZodObject<{
         field: z.ZodArray<z.ZodNullable<z.ZodObject<{
@@ -1729,156 +1497,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1889,48 +1626,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -1941,46 +1672,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>>, "many">;
         hand: z.ZodOptional<z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -2010,156 +1732,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2170,48 +1861,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2222,46 +1907,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">>;
         opponentHand: z.ZodOptional<z.ZodArray<z.ZodUnknown, "many">>;
         graveyard: z.ZodArray<z.ZodObject<{
@@ -2292,156 +1968,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2452,48 +2097,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2504,46 +2143,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">;
         mustDiscard: z.ZodBoolean;
         hasPlayedCard: z.ZodBoolean;
@@ -2575,156 +2205,125 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2735,48 +2334,42 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2787,46 +2380,37 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">;
         lifePoints: z.ZodOptional<z.ZodNumber>;
         tokenCount: z.ZodOptional<z.ZodNumber>;
@@ -2834,6 +2418,9 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
     }, "strip", z.ZodTypeAny, {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2844,49 +2431,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2897,51 +2478,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -2952,51 +2527,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3007,52 +2576,46 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     }, {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3063,49 +2626,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3116,51 +2673,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3171,51 +2722,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3226,49 +2771,40 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     }>>;
     turn: z.ZodOptional<z.ZodNumber>;
     phase: z.ZodOptional<z.ZodEnum<["Standby", "Main", "Battle", "End"]>>;
@@ -3281,6 +2817,9 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
     player1?: {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3291,49 +2830,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3344,49 +2877,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3397,51 +2924,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3452,55 +2973,49 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     } | undefined;
     player2?: {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3511,49 +3026,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3564,51 +3073,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3619,51 +3122,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3674,49 +3171,40 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     } | undefined;
     activePlayer?: string | undefined;
     gameOver?: boolean | undefined;
@@ -3727,6 +3215,9 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
     player1?: {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3737,49 +3228,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         hand: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3790,49 +3275,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3843,51 +3322,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3898,55 +3371,49 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     } | undefined;
     player2?: {
         field: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -3957,49 +3424,43 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[];
         graveyard: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4010,51 +3471,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         mustDiscard: boolean;
         hasPlayedCard: boolean;
         deck: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4065,51 +3520,45 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[];
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4120,49 +3569,40 @@ export declare const GameStateUpdateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         opponentHand?: unknown[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     } | undefined;
     activePlayer?: string | undefined;
     gameOver?: boolean | undefined;
@@ -4199,156 +3639,125 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4359,48 +3768,42 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4411,46 +3814,37 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">>;
         deck: z.ZodOptional<z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -4480,156 +3874,125 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4640,48 +4003,42 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4692,46 +4049,37 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">>;
         field: z.ZodOptional<z.ZodArray<z.ZodNullable<z.ZodObject<{
             id: z.ZodString;
@@ -4761,156 +4109,125 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4921,48 +4238,42 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -4973,46 +4284,37 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>>, "many">>;
         graveyard: z.ZodOptional<z.ZodArray<z.ZodObject<{
             id: z.ZodString;
@@ -5042,156 +4344,125 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             }>;
-            faction: z.ZodOptional<z.ZodEnum<["Celestial", "Assassin", "Viking", "Engine", "Dragon", "Samurai", "Wizard", "Vampire"]>>;
-            cost: z.ZodOptional<z.ZodNumber>;
-            effects: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                trigger: z.ZodEnum<["OnPlay", "OnPurified", "OnHitNexus", "OnReveal", "OnDraw", "OnExhaust", "OnDestroyed", "V", "Aura", "AfterAttack", "Passive", "OnDetected"]>;
-                action: z.ZodEnum<["purify", "damage", "restore_health", "draw", "shuffle_self_into_deck", "move_to_bottom_of_deck", "reveal_top_cards", "reorder_revealed_cards", "select_from_revealed", "shuffle_card_type_into_deck", "move_remaining_to_bottom", "deploy_self", "take_control_of_unit", "return_to_hand", "move_cards_from_graveyard_to_deck", "ignore_shield", "activate_own_V_ability", "choice", "reduce_cost_to_zero", "restore_health_per_hidden_assassins", "return_to_owner_hand"]>;
-                condition: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodObject<{
-                    'unit.level': z.ZodOptional<z.ZodString>;
-                    'target.type': z.ZodOptional<z.ZodString>;
-                    another_unit_in_play: z.ZodOptional<z.ZodString>;
-                    'another_unit.faction': z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }, {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                }>]>>;
-                target: z.ZodOptional<z.ZodEnum<["self", "opponent", "opponent_nexus", "self_nexus"]>>;
-                amount: z.ZodOptional<z.ZodNumber>;
-                cardType: z.ZodOptional<z.ZodString>;
-                token: z.ZodOptional<z.ZodBoolean>;
-                useAvailableTokenPool: z.ZodOptional<z.ZodBoolean>;
-                prompt: z.ZodOptional<z.ZodObject<{
-                    en: z.ZodOptional<z.ZodString>;
-                    fr: z.ZodOptional<z.ZodString>;
-                    es: z.ZodOptional<z.ZodString>;
-                }, "strip", z.ZodTypeAny, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }, {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                }>>;
-                moveTo: z.ZodOptional<z.ZodEnum<["opponent_graveyard", "top_of_deck", "bottom_of_deck"]>>;
-                from: z.ZodOptional<z.ZodString>;
-                to: z.ZodOptional<z.ZodString>;
-                max: z.ZodOptional<z.ZodNumber>;
-                options: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                    title: z.ZodObject<{
-                        fr: z.ZodString;
-                        en: z.ZodString;
-                        es: z.ZodString;
+            faction: z.ZodEnum<["assassin", "celestial", "dragon", "engine", "samurai", "vampire", "viking", "wizard"]>;
+            label: z.ZodArray<z.ZodString, "many">;
+            cost: z.ZodNumber;
+            effects: z.ZodOptional<z.ZodObject<{
+                on_play: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_hit_nexus: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_reveal: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_draw: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_exhaust: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_purified: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_destroyed: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_attack_resolve: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                on_discard: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                aura: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+                reactions: z.ZodOptional<z.ZodArray<z.ZodType<import("../CardTypes").Effect, z.ZodTypeDef, import("../CardTypes").Effect>, "many">>;
+            }, "strip", z.ZodTypeAny, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }, {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            }>>;
+            types: z.ZodArray<z.ZodObject<{
+                type: z.ZodEnum<["unit", "spell", "token"]>;
+                subTypes: z.ZodOptional<z.ZodEnum<["attack", "defence", "support", "token"]>>;
+                target: z.ZodArray<z.ZodObject<{
+                    owner: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    type: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    id: z.ZodOptional<z.ZodUnion<[z.ZodString, z.ZodArray<z.ZodString, "many">]>>;
+                    property: z.ZodOptional<z.ZodString>;
+                    filter: z.ZodOptional<z.ZodObject<{
+                        max_value: z.ZodOptional<z.ZodNumber>;
+                        label: z.ZodOptional<z.ZodArray<z.ZodString, "many">>;
                     }, "strip", z.ZodTypeAny, {
-                        fr: string;
-                        en: string;
-                        es: string;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
                     }, {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    }>;
-                    actions: z.ZodArray<z.ZodAny, "many">;
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    }>>;
                 }, "strip", z.ZodTypeAny, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
                 }, {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }>, "many">>;
-            }, "strip", z.ZodTypeAny, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }, {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }>, "many">>;
-            types: z.ZodOptional<z.ZodArray<z.ZodObject<{
-                type: z.ZodEnum<["Attack", "Defence", "Support", "Spell", "token"]>;
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }>, "many">;
                 value: z.ZodNumber;
+                trample: z.ZodOptional<z.ZodBoolean>;
             }, "strip", z.ZodTypeAny, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
             }, {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }>, "many">>;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }>, "many">;
             exhausted: z.ZodOptional<z.ZodBoolean>;
-            quantity: z.ZodOptional<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5202,48 +4473,42 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }, {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5254,46 +4519,37 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }>, "many">>;
         hasPlayedCard: z.ZodOptional<z.ZodBoolean>;
         mustDiscard: z.ZodOptional<z.ZodBoolean>;
@@ -5305,6 +4561,9 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
         tokenCount?: number | undefined;
         field?: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5315,49 +4574,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5368,49 +4621,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5421,51 +4668,45 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
         deck?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5476,53 +4717,47 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     }, {
         lifePoints?: number | undefined;
         tokenCount?: number | undefined;
         field?: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5533,49 +4768,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5586,49 +4815,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5639,51 +4862,45 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
         deck?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5694,48 +4911,39 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     }>;
 }, "strip", z.ZodTypeAny, {
     gameId: string;
@@ -5744,6 +4952,9 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
         tokenCount?: number | undefined;
         field?: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5754,49 +4965,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5807,49 +5012,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5860,51 +5059,45 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
         deck?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5915,48 +5108,39 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     };
 }, {
     gameId: string;
@@ -5965,6 +5149,9 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
         tokenCount?: number | undefined;
         field?: ({
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -5975,49 +5162,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         } | null)[] | undefined;
         hand?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -6028,49 +5209,43 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         graveyard?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -6081,51 +5256,45 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
         mustDiscard?: boolean | undefined;
         hasPlayedCard?: boolean | undefined;
         deck?: {
             id: string;
+            label: string[];
+            faction: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard";
+            cost: number;
             name: {
                 fr: string;
                 en: string;
@@ -6136,48 +5305,39 @@ export declare const EmitUpdateGameStateSchema: z.ZodObject<{
                 en: string;
                 es: string;
             };
-            faction?: "Celestial" | "Assassin" | "Viking" | "Engine" | "Dragon" | "Samurai" | "Wizard" | "Vampire" | undefined;
-            cost?: number | undefined;
-            effects?: {
-                trigger: "OnPlay" | "OnPurified" | "OnHitNexus" | "OnReveal" | "OnDraw" | "OnExhaust" | "OnDestroyed" | "V" | "Aura" | "AfterAttack" | "Passive" | "OnDetected";
-                action: "purify" | "damage" | "restore_health" | "draw" | "shuffle_self_into_deck" | "move_to_bottom_of_deck" | "reveal_top_cards" | "reorder_revealed_cards" | "select_from_revealed" | "shuffle_card_type_into_deck" | "move_remaining_to_bottom" | "deploy_self" | "take_control_of_unit" | "return_to_hand" | "move_cards_from_graveyard_to_deck" | "ignore_shield" | "activate_own_V_ability" | "choice" | "reduce_cost_to_zero" | "restore_health_per_hidden_assassins" | "return_to_owner_hand";
-                options?: {
-                    title: {
-                        fr: string;
-                        en: string;
-                        es: string;
-                    };
-                    actions: any[];
-                }[] | undefined;
-                token?: boolean | undefined;
-                condition?: string | {
-                    'unit.level'?: string | undefined;
-                    'target.type'?: string | undefined;
-                    another_unit_in_play?: string | undefined;
-                    'another_unit.faction'?: string | undefined;
-                } | undefined;
-                target?: "self" | "opponent" | "opponent_nexus" | "self_nexus" | undefined;
-                amount?: number | undefined;
-                cardType?: string | undefined;
-                useAvailableTokenPool?: boolean | undefined;
-                prompt?: {
-                    fr?: string | undefined;
-                    en?: string | undefined;
-                    es?: string | undefined;
-                } | undefined;
-                moveTo?: "opponent_graveyard" | "top_of_deck" | "bottom_of_deck" | undefined;
-                from?: string | undefined;
-                to?: string | undefined;
-                max?: number | undefined;
-            }[] | undefined;
-            types?: {
+            types: {
                 value: number;
-                type: "Attack" | "Defence" | "Support" | "Spell" | "token";
-            }[] | undefined;
+                type: "unit" | "spell" | "token";
+                target: {
+                    type?: string | string[] | undefined;
+                    filter?: {
+                        max_value?: number | undefined;
+                        label?: string[] | undefined;
+                    } | undefined;
+                    owner?: string | string[] | undefined;
+                    id?: string | string[] | undefined;
+                    property?: string | undefined;
+                }[];
+                trample?: boolean | undefined;
+                subTypes?: "token" | "attack" | "defence" | "support" | undefined;
+            }[];
+            effects?: {
+                on_play?: import("../CardTypes").Effect[] | undefined;
+                on_hit_nexus?: import("../CardTypes").Effect[] | undefined;
+                on_reveal?: import("../CardTypes").Effect[] | undefined;
+                on_draw?: import("../CardTypes").Effect[] | undefined;
+                on_exhaust?: import("../CardTypes").Effect[] | undefined;
+                on_purified?: import("../CardTypes").Effect[] | undefined;
+                on_destroyed?: import("../CardTypes").Effect[] | undefined;
+                on_attack?: import("../CardTypes").Effect[] | undefined;
+                on_attack_resolve?: import("../CardTypes").Effect[] | undefined;
+                on_discard?: import("../CardTypes").Effect[] | undefined;
+                aura?: import("../CardTypes").Effect[] | undefined;
+                reactions?: import("../CardTypes").Effect[] | undefined;
+            } | undefined;
             exhausted?: boolean | undefined;
-            quantity?: number | undefined;
         }[] | undefined;
-        tokenType?: "assassin" | "viking" | "engine" | "celestial" | "dragon" | "samurai" | "wizard" | "vampire" | null | undefined;
+        tokenType?: "assassin" | "celestial" | "dragon" | "engine" | "samurai" | "vampire" | "viking" | "wizard" | null | undefined;
     };
 }>;
 export declare const GameOverSchema: z.ZodObject<{

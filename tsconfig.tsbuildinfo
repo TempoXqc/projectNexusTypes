@@ -1,1 +1,1 @@
-{"root":["./src/cardtypes.ts","./src/gamestatetypes.ts","./src/phasedatatypes.ts","./src/index.ts","./src/socketschemas/action.ts","./src/socketschemas/chat.ts","./src/socketschemas/deck.ts","./src/socketschemas/game.ts","./src/socketschemas/phase.ts","./src/socketschemas/player.ts"],"version":"5.8.3"}
+{"root":["./src/cardtypes.ts","./src/index.ts"],"version":"5.8.3"}

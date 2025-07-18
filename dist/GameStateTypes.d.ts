@@ -1,7 +1,7 @@
-import { Card } from './CardTypes';
+import { Card, HiddenCard } from './CardTypes';
 export interface GameState {
     player: PlayerState;
-    opponent: PlayerState;
+    opponent: OpponentState;
     game: {
         turn: number;
         currentPhase: 'Standby' | 'Main' | 'Battle' | 'End';
@@ -65,6 +65,46 @@ export interface GameState {
         canInitializeDraw: boolean;
     };
 }
+export interface PlayerState {
+    hand: Card[];
+    deck: Card[];
+    graveyard: Card[];
+    field: (Card | null)[];
+    opponentField: (Card | null)[];
+    opponentHand: (Card | null)[];
+    mustDiscard: boolean;
+    hasPlayedCard: boolean;
+    lifePoints: number;
+    tokenCount: number;
+    tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
+    mulliganDone: boolean;
+    playmat: {
+        id: string;
+        name: string;
+        image: string;
+    };
+    revealedCards?: Card[];
+}
+export interface OpponentState {
+    hand: HiddenCard[];
+    deck: Card[];
+    graveyard: Card[];
+    field: (Card | null)[];
+    opponentField: (Card | null)[];
+    opponentHand: (Card | null)[];
+    mustDiscard: boolean;
+    hasPlayedCard: boolean;
+    lifePoints: number;
+    tokenCount: number;
+    tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
+    mulliganDone: boolean;
+    playmat: {
+        id: string;
+        name: string;
+        image: string;
+    };
+    revealedCards?: Card[];
+}
 export interface ServerGameState {
     gameId: string;
     players: string[];
@@ -105,26 +145,6 @@ export interface ServerGameState {
         name: string;
         image: string;
     };
-}
-export interface PlayerState {
-    hand: Card[];
-    deck: Card[];
-    graveyard: Card[];
-    field: (Card | null)[];
-    opponentField: (Card | null)[];
-    opponentHand: (Card | null)[];
-    mustDiscard: boolean;
-    hasPlayedCard: boolean;
-    lifePoints: number;
-    tokenCount: number;
-    tokenType: 'assassin' | 'viking' | 'engine' | 'celestial' | 'dragon' | 'samurai' | 'wizard' | 'vampire' | null;
-    mulliganDone: boolean;
-    playmat: {
-        id: string;
-        name: string;
-        image: string;
-    };
-    revealedCards?: Card[];
 }
 export interface PersistedServerGameState extends Omit<ServerGameState, 'playersReady'> {
     playersReady: number[];
