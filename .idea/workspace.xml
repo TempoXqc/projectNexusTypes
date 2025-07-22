@@ -7,31 +7,8 @@
     <list default="true" id="05f9c425-7321-4ea7-9286-7253606e0a5d" name="Changes" comment="Corriger tsconfig.json et publier le paquet de types">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/CardTypes.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/CardTypes.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/CardTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/CardTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/GameStateTypes.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/GameStateTypes.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/SocketSchemas/Action.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/SocketSchemas/Action.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/SocketSchemas/Game.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/SocketSchemas/Game.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/CardTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/CardTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameStateTypes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PhaseDataTypes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Action.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Action.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Chat.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Chat.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Deck.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Deck.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Game.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Game.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Phase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Phase.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Player.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Player.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -144,6 +121,7 @@
       <workItem from="1752192815113" duration="989000" />
       <workItem from="1752352198262" duration="1785000" />
       <workItem from="1752785463042" duration="21391000" />
+      <workItem from="1753193690426" duration="3554000" />
     </task>
     <task id="LOCAL-00001" summary="Corriger tsconfig.json et publier le paquet de types">
       <option name="closed" value="true" />

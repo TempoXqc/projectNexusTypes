@@ -162,6 +162,7 @@ export interface PlayerState {
     mustDiscard?: boolean;
     hasPlayedCard?: boolean;
     lifePoints?: number;
+    actionPoints?: number;
     tokenCount?: number;
     tokenType?: string | null;
     mulliganDone?: boolean;
@@ -190,6 +191,7 @@ export interface OpponentState {
     mustDiscard?: boolean;
     hasPlayedCard?: boolean;
     lifePoints?: number;
+    actionPoints?: number;
     tokenCount?: number;
     tokenType?: string | null;
     mulliganDone?: boolean;
