@@ -4,35 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="05f9c425-7321-4ea7-9286-7253606e0a5d" name="Changes" comment="Corriger tsconfig.json et publier le paquet de types">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/CardTypes.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/CardTypes.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/CardTypes.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/CardTypes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/GameStateTypes.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/GameStateTypes.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/SocketSchemas/Action.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/SocketSchemas/Action.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/SocketSchemas/Game.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/SocketSchemas/Game.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.d.ts" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.d.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/CardTypes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/CardTypes.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameStateTypes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/PhaseDataTypes.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Action.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Action.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Chat.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Chat.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Deck.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Deck.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Game.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Game.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Phase.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Phase.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Player.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SocketSchemas/Player.ts" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.tsbuildinfo" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.tsbuildinfo" afterDir="false" />
-    </list>
+    <list default="true" id="05f9c425-7321-4ea7-9286-7253606e0a5d" name="Changes" comment="Corriger tsconfig.json et publier le paquet de types" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -64,25 +36,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Mr Peter/WebstormProjects/projectNexusTypes&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;npm.build.executor&quot;: &quot;Run&quot;,
-    &quot;npm.publish.executor&quot;: &quot;Run&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Mr Peter\\WebstormProjects\\projectNexusTypes\\node_modules\\typescript\\lib&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "last_opened_file_path": "C:/Users/Mr Peter/WebstormProjects/projectNexusTypes",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "npm.build.executor": "Run",
+    "npm.publish.executor": "Run",
+    "ts.external.directory.path": "C:\\Users\\Mr Peter\\WebstormProjects\\projectNexusTypes\\node_modules\\typescript\\lib",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Mr Peter\WebstormProjects\projectNexusTypes" />
@@ -123,7 +96,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
+        <option value="bundled-js-predefined-d6986cc7102b-09060db00ec0-JavaScript-WS-251.26927.40" />
       </set>
     </attachedChunks>
   </component>
@@ -144,6 +117,7 @@
       <workItem from="1752192815113" duration="989000" />
       <workItem from="1752352198262" duration="1785000" />
       <workItem from="1752785463042" duration="21391000" />
+      <workItem from="1752922402473" duration="8000" />
     </task>
     <task id="LOCAL-00001" summary="Corriger tsconfig.json et publier le paquet de types">
       <option name="closed" value="true" />
