@@ -249,6 +249,7 @@ export interface GameState {
         playerId: number | null;
         isConnected: boolean;
         canInitializeDraw: boolean;
+        gameId: string
     };
 }
 

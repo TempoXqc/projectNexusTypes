@@ -281,6 +281,7 @@ export interface GameState {
         playerId: number | null;
         isConnected: boolean;
         canInitializeDraw: boolean;
+        gameId: string;
     };
 }
 export interface ServerGameState {
